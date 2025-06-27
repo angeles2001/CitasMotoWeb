@@ -1,0 +1,187 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: url("/img/foto2.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .form-container {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #444;
+            padding: 40px 35px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            color: white;
+            backdrop-filter: blur(4px);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: #ff3b3b;
+            text-shadow: 1px 1px 3px black;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: inline-block;
+            text-shadow: 1px 1px 2px #000;
+            margin-bottom: 5px;
+        }
+
+        .form-control,
+        .form-select {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 10px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: #ff3b3b;
+            box-shadow: 0 0 8px rgba(255, 59, 59, 0.4);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #ddd;
+        }
+
+        .btn-primary {
+            background: #d20b0b;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(210, 11, 11, 0.3);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #a10606;
+            box-shadow: 0 10px 25px rgba(161, 6, 6, 0.5);
+        }
+
+        .btn-secondary {
+            background: #000;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: #222;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .valid-feedback,
+        .invalid-feedback {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #ff6b6b;
+        }
+        .form-select option {
+            color: #000;
+            background-color: #fff;
+        }
+
+        .form-control {
+            color: white !important;
+        }
+
+        .form-control::placeholder {
+            color: #ccc !important;
+        }
+
+
+    </style>
+
+
+</head>
+<body>
+
+<!--Creamos un formulario en el que se van a guardar los datos de los empleados que introduzcamos a la tabla-->
+
+<div class="container py-4">
+
+    <div style="text-align: center; margin-bottom: 25px;">
+        <img src="/img/Captura_de_pantalla_2025-06-13_090442-removebg-preview.png" alt="MP Racing Logo" style="max-width: 160px; height: auto; background-color: rgba(255,255,255,0.7); padding: 6px; border-radius: 10px;">
+    </div>
+
+    <h2 th:text="${cliente.id} !=null? 'Editar Cliente' : 'Nuevo Cliente'"></h2>
+    <form th:action="@{/guardar}" th:object="${cliente}" method="post" class="form-container" >
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" th:field="*{nombre}" class="form-control" id="nombre">
+        </div>
+        <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" th:field="*{telefono}" class="form-control" id="telefono">
+        </div>
+        <div class="mb-3">
+            <label for="moto" class="form-label">Moto</label>
+            <input type="text" th:field="*{moto}" class="form-control" id="moto">
+        </div>
+        <div class="mb-3">
+            <label for="fechaHora" class="form-label">Fecha y hora</label>
+            <input type="datetime-local" th:field="*{fecha_hora}" class="form-control" id="fechaHora">
+        </div>
+        <div class="mb-3">
+            <label for="tipoCita" class="form-label">Tipo de cita</label>
+            <select class="form-select" id="tipoCita" name="tipoCita" required>
+                <option disabled selected>Selecciona el tipo de cita</option>
+                <option value="1">Servicio y mantenimiento</option>
+                <option value="2">Recoger moto nueva</option>
+                <option value="3">Prueba de motos</option>
+                <option value="4">Otras opciones</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a th:href="@{/clientes}" class="btn btn-secondary">Cancelar</a>
+
+    </form>
+</div>
+</body>
+</html>
